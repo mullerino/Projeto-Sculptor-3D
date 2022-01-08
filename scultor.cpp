@@ -95,6 +95,7 @@ void Scultor::putSphere(int xcenter, int ycenter, int zcenter, int radius){
   for(int i = -radius; i<=radius; i++){
       for(int j = -radius; j<=radius; j++){
           for(int k = -radius; k<=radius; k++){
+         
             if ((i*i+j*j+k*k) < radius*radius){
               putVoxel(i+xcenter,j+ycenter,k+zcenter);
             }
@@ -156,10 +157,10 @@ void Scultor::writeOFF(char *filename)
 {
   int quantvox = 0;
   int ref;
-  ofstream arq;
-  arq.open(filename);
+  ofstream Arqfinal;
+  Arqfinal.open(filename);
 
-  arq<<"OFF\n";
+  Arqfinal<<"OFF\n";
 
   // varre todos os voxel e analisa os que devem ser exibidos no .off
   for (int i = 0; i < nx; i++){
@@ -171,20 +172,20 @@ void Scultor::writeOFF(char *filename)
            }
        }
   }
-  arq<<quantvox * 8<<" "<<quantvox * 6 << " " << "0" << "\n"; // mostra a quantidade total de faces, vertices e arestas
+  Arqfinal<<quantvox * 8<<" "<<quantvox * 6 << " " << "0" << "\n"; // mostra a quantidade total de vertices, faces e arestas
 
   for (int a = 0; a < nx; a++){
       for (int b = 0; b < ny; b++){
            for (int c = 0; c < nz; c++){
                 if(v[a][b][c].isOn == true){
-                arq << a - fix << " " << b + fix << " " << c - fix << "\n" << flush;
-                arq << a - fix << " " << b - fix << " " << c - fix << "\n" << flush;
-                arq << a + fix << " " << b - fix << " " << c - fix << "\n" << flush;
-                arq << a + fix << " " << b + fix << " " << c - fix << "\n" << flush;
-                arq << a - fix << " " << b + fix << " " << c + fix << "\n" << flush;
-                arq << a - fix << " " << b - fix << " " << c + fix << "\n" << flush;
-                arq << a + fix << " " << b - fix << " " << c + fix << "\n" << flush;
-                arq << a + fix << " " << b + fix << " " << c + fix << "\n" << flush;
+                Arqfinal << a - fix << " " << b + fix << " " << c - fix << "\n" << flush;
+                Arqfinal << a - fix << " " << b - fix << " " << c - fix << "\n" << flush;
+                Arqfinal << a + fix << " " << b - fix << " " << c - fix << "\n" << flush;
+                Arqfinal << a + fix << " " << b + fix << " " << c - fix << "\n" << flush;
+                Arqfinal << a - fix << " " << b + fix << " " << c + fix << "\n" << flush;
+                Arqfinal << a - fix << " " << b - fix << " " << c + fix << "\n" << flush;
+                Arqfinal << a + fix << " " << b - fix << " " << c + fix << "\n" << flush;
+                Arqfinal << a + fix << " " << b + fix << " " << c + fix << "\n" << flush;
                 }
            }
       }
@@ -198,34 +199,31 @@ void Scultor::writeOFF(char *filename)
            for (int c= 0; c<nz; c++){
                 if(v[a][b][c].isOn == true){
                 ref = quantvox * 8;
-                arq << fixed;
+                Arqfinal << fixed;
 
                 // montar linha que realiza a construção das faces a partir do vertices e mostrar as propriedades rgba do voxel
-                arq << "4" << " " << 0+ref << " " << 3+ref << " " << 2+ref << " " << 1+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 0+ref << " " << 3+ref << " " << 2+ref << " " << 1+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
-                arq << "4" << " " << 4+ref << " " << 5+ref << " " << 6+ref << " " << 7+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 4+ref << " " << 5+ref << " " << 6+ref << " " << 7+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
-                arq << "4" << " " << 0+ref << " " << 1+ref << " " << 5+ref << " " << 4+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 0+ref << " " << 1+ref << " " << 5+ref << " " << 4+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
-                arq << "4" << " " << 0+ref << " " << 4+ref << " " << 7+ref << " " << 3+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 0+ref << " " << 4+ref << " " << 7+ref << " " << 3+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
-                arq << "4" << " " << 3+ref << " " << 7+ref << " " << 6+ref << " " << 2+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 3+ref << " " << 7+ref << " " << 6+ref << " " << 2+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
-                arq << "4" << " " << 1+ref << " " << 2+ref << " " << 6+ref << " " << 5+ref << " ";
-                arq << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
+                Arqfinal << "4" << " " << 1+ref << " " << 2+ref << " " << 6+ref << " " << 5+ref << " ";
+                Arqfinal << setprecision(2)<<v[a][b][c].r << " " << setprecision(2)<<v[a][b][c].g <<" " << setprecision(2)<<v[a][b][c].b << " " << setprecision(2) << v[a][b][c].a << "\n";
 
                 quantvox = quantvox + 1;
                 }
            }
        }
   }
-  arq.close();
+  Arqfinal.close();
 }
-
-
-

@@ -4,9 +4,9 @@
 class Scultor
 {
 private:
-    Voxel ***v; // 3D matrix
-    int nx,ny,nz; // Dimensions
-    float r,g,b,a; // Current drawing color
+    Voxel ***v; // Matrix 3D
+    int nx,ny,nz; // Dimensões
+    float r,g,b,a; // Propriedades do Voxel
     float fix;
 
 public:

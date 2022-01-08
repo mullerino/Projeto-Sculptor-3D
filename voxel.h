@@ -4,7 +4,6 @@
 struct Voxel{
     float r, g, b, a;
     bool isOn;
-
 };
 
 #endif // VOXEL_H
